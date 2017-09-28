@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background_color"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="incop.ark.lyte.adaboo.taxipickuppng.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_below="@+id/img"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="300dp"
+        android:id="@+id/names"
+        app:mtf_cardCollapsedHeight="4dp"
+        app:mtf_animationDuration="1000"
+        android:layout_height="wrap_content"
+        app:mtf_labelColor="#000000"
+        app:mtf_image="@drawable/location">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NAME"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinnersuburb"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/names"
+            android:layout_height="wrap_content"/>
+
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinnerpick"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/spinnersuburb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="300dp"
+            android:id="@+id/phone"
+            android:layout_below="@+id/spinnerpick"
+        android:layout_height="wrap_content"
+        app:mtf_labelColor="#666"
+        app:mtf_image="@drawable/location">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PHONE NUMBER"
+            android:inputType="phone"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="300dp"
+        android:layout_below="@+id/phone"
+        android:layout_height="wrap_content"
+        app:mtf_labelColor="#666"
+        app:mtf_image="@drawable/location">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PICK UP"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/logo"
+        android:text="Hello World!"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="126dp"
+        android:layout_marginStart="126dp" />
+
+
+</RelativeLayout>
