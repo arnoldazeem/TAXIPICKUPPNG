@@ -48,6 +48,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/adaboo/.android/build-cache/35aa2b3099dd30a5c3cd816edb4385ae01069b77/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/home/adaboo/AndroidStudioProjects/TAXIPICKUPPNG/app/build/intermediates/pre-dexed/debug/classes_456a997e1b5b4fee27c083e02d7b9c30ac792d31.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/adaboo/.android/build-cache/c62f3872f0d48eeb428e7a099d25c934f108d784/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -90,6 +99,15 @@
         revision="26.0.0"
         sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
         <dex dex="/home/adaboo/AndroidStudioProjects/TAXIPICKUPPNG/app/build/intermediates/pre-dexed/debug/classes_f883ece37c09c66be00ef373ee0f2138089f6fef.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/adaboo/AndroidStudioProjects/TAXIPICKUPPNG/app/libs/MD5Simply.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="46b0ec4fa70168d8020408d330cac47d1e95926b">
+        <dex dex="/home/adaboo/AndroidStudioProjects/TAXIPICKUPPNG/app/build/intermediates/pre-dexed/debug/MD5Simply_81b6b674e13ddfef64e2d64a84a73887eef6d82c.jar" />
     </item>
     <item
         is-multidex="false"

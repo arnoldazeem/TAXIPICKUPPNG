@@ -21,6 +21,7 @@
         android:layout_width="300dp"
         android:id="@+id/names"
         app:mtf_cardCollapsedHeight="4dp"
+        android:layout_centerHorizontal="true"
         app:mtf_animationDuration="1000"
         android:layout_height="wrap_content"
         app:mtf_labelColor="#000000"
@@ -36,27 +37,12 @@
 
     </com.github.florent37.materialtextfield.MaterialTextField>
 
-        <com.jaredrummler.materialspinner.MaterialSpinner
-            android:id="@+id/spinnersuburb"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/names"
-            android:layout_height="wrap_content"/>
-
-
-        <com.jaredrummler.materialspinner.MaterialSpinner
-            android:id="@+id/spinnerpick"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/spinnersuburb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
 
         <com.github.florent37.materialtextfield.MaterialTextField
         android:layout_width="300dp"
             android:id="@+id/phone"
-            android:layout_below="@+id/spinnerpick"
+            android:layout_below="@+id/names"
+            android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         app:mtf_labelColor="#666"
         app:mtf_image="@drawable/location">
@@ -74,6 +60,8 @@
 
     <com.github.florent37.materialtextfield.MaterialTextField
         android:layout_width="300dp"
+        android:id="@+id/pick"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/phone"
         android:layout_height="wrap_content"
         app:mtf_labelColor="#666"
@@ -87,6 +75,23 @@
             android:textSize="15sp" />
 
     </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinnersuburb"
+            android:layout_marginTop="7dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/pick"
+            android:layout_height="wrap_content"/>
+
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinnerpick"
+            android:layout_marginTop="7dp"
+            android:layout_below="@+id/spinnersuburb"
+            android:layout_width="50dp"
+            android:layout_height="40dp"/>
+
 
     </RelativeLayout>
 
