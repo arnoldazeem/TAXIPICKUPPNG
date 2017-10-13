@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         MaterialSpinner spinner = (MaterialSpinner) findViewById(R.id.spinnerpick);
-        spinner.setItems("30mins", "1hour", "2hours");
+        spinner.setItems("Pickup Time","30mins", "1hour", "2hours");
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         MaterialSpinner spinner1 = (MaterialSpinner) findViewById(R.id.spinnersuburb);
-        spinner1.setItems("mile1", "mile2", "mile3", "mile3", "mile4");
+        spinner1.setItems("State/County","mile1", "mile2", "mile3", "mile3", "mile4");
         spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {

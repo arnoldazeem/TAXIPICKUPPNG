@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.kosalgeek.android.md5simply.MD5;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,26 +60,28 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
 
     RequestQueue requestQueue;
-    ProgressDialog progress;
-    JSONArray products  = null;
-    GridView grid;
     String finals;
-    String urls;
     String getFullName;
     String getEmailId;
     String getMobileNumber;
     String getLocation;
-    String getState;
+    String getCity;
     String getZipcode;
     String getPassword;
     String getConfirmPassword;
 	String getencryptedpassword;
+    ArrayAdapter<String> adapter;
+    MaterialBetterSpinner spinnercity;
 
     private static String S_URL ="https://vast-springs-89039.herokuapp.com/register";
 
     CheckBox checkBoxTerms;private Snackbar snackbar;
     //private ProgressDialog pd;
     ProgressBar  pd;
+
+    String[] COUNTRIES = new String[] {
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
 
 	public SignUp_Fragment() {
 
@@ -90,6 +94,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 		initViews();
 		setListeners();
 
+
+
 		return view;
 	}
 
@@ -99,7 +105,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 		emailId = (EditText) view.findViewById(R.id.userEmailId);
 		mobileNumber = (EditText) view.findViewById(R.id.mobileNumber);
 		location = (EditText) view.findViewById(R.id.location);
-        state = (EditText) view.findViewById(R.id.state);
+       // state = (EditText) view.findViewById(R.id.state);
         zippy = (EditText) view.findViewById(R.id.zipcode);
 		password = (EditText) view.findViewById(R.id.password);
 		confirmPassword = (EditText) view.findViewById(R.id.confirmPassword);
@@ -108,7 +114,19 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 		terms_conditions = (CheckBox) view.findViewById(R.id.terms_conditions);
 
 
-	}
+        spinnercity = (MaterialBetterSpinner)
+                view.findViewById(R.id.spinnerci);
+
+
+
+         adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+
+
+        spinnercity.setAdapter(adapter);
+
+
+}
 
 	// Set Listeners
 	private void setListeners() {
@@ -142,7 +160,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 		 getEmailId = emailId.getText().toString();
 		 getMobileNumber = mobileNumber.getText().toString();
 		 getLocation = location.getText().toString();
-         getState = state.getText().toString();
+         getCity = spinnercity.getText().toString();
          getZipcode = zippy.getText().toString();
 		 getPassword = password.getText().toString();
 		 getConfirmPassword = confirmPassword.getText().toString();
@@ -158,7 +176,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 				|| getEmailId.equals("") || getEmailId.length() == 0
 				|| getMobileNumber.equals("") || getMobileNumber.length() == 0
 				|| getLocation.equals("") || getLocation.length() == 0
-                || getState.equals("") || getState.length() == 0
+                || getCity.equals("") || getCity.length() == 0
                 || getZipcode.equals("") || getZipcode.length() == 0
 				|| getPassword.equals("") || getPassword.length() == 0
 				|| getConfirmPassword.equals("")
@@ -166,6 +184,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
 			new CustomToast().Show_Toast(getActivity(), view,
 					"All fields are required.");
+
 
 		// Check if email id valid or not
 		else if (!m.find())
@@ -188,7 +207,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 					.show();
 
             try {
-                signupRequest();
+              //  UserRegistration();
             }catch (Exception E){
                E.printStackTrace();
             }
@@ -240,8 +259,15 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
                 // Adding All values to Params.
                 // The firs argument should be same sa your MySQL database table columns.
-                params.put("firstName", getMobileNumber);
+                params.put("name", getFullName);
+                params.put("email", getEmailId);
+                params.put("MobileNumber", getMobileNumber);
+                params.put("location", getLocation);
                 params.put("User_Password", getPassword);
+                params.put("city", getCity);
+
+
+
                 //params.put("User_Full_Name", NameHolder);
 
                 return params;
@@ -271,7 +297,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
     private void signupRequest() throws Exception{
 
 
-
         requestQueue = Volley.newRequestQueue(getActivity());
 
         finals = "https://vast-springs-89039.herokuapp.com/register";
@@ -286,7 +311,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, finals, jsonBody, new Response.Listener<JSONObject>() {
 
-
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("TAG", response + "toString()");
@@ -297,7 +321,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             public void onErrorResponse(VolleyError error) {
                 Log.e("TAG", error.getMessage(), error);
             }
-
 
         }){
 

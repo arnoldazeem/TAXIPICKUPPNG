@@ -2,12 +2,16 @@ package incop.ark.lyte.adaboo.taxipickuppng;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,17 +23,30 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Login_Fragment extends Fragment implements OnClickListener {
 	private static View view;
@@ -41,9 +58,11 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 	private static LinearLayout loginLayout;
 	private static Animation shakeAnimation;
 	private static FragmentManager fragmentManager;
-    ProgressDialog pDialog;
 
+    RequestQueue requestQueue;
+    String finals;
     String getEmailId,getPassword;
+    DelayedProgressDialog progressDialog;
 
 	public Login_Fragment() {
 
@@ -79,6 +98,9 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 		shakeAnimation = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.shake);
 
+        //progressBar = new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleSmall);
+
+         progressDialog = new DelayedProgressDialog();
 
 	}
 
@@ -142,7 +164,6 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 			break;
 
 		case R.id.link_signup:
-
 			// Replace signup frgament with animation
 			fragmentManager
 					.beginTransaction()
@@ -178,10 +199,112 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 			new CustomToast().Show_Toast(getActivity(), view,
 					"Your Email Id is Invalid.");
 		// Else do login and do your stuff
-		//else
-			//Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
-			//		.show();
-           // login();
+		else{
+			Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
+					.show();
+            try {
+                signupRequest();
+            }catch (Exception E){
+                E.printStackTrace();
+            }
+
+
+        }
+
+	}
+
+
+
+	private void signupRequest() throws Exception{
+
+		requestQueue = Volley.newRequestQueue(getActivity());
+
+		finals = "https://vast-springs-89039.herokuapp.com/login";
+
+        //"Rocky"
+		JSONObject jsonBody = new JSONObject();
+		jsonBody.put("firstName","Rocky");
+		jsonBody.put("password", getPassword);
+
+		final String mRequestBody = jsonBody.toString();
+
+		RequestQueue mQueue = Volley.newRequestQueue(getActivity());
+
+        progressDialog.show(getActivity().getSupportFragmentManager(), "tag");
+
+
+
+		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, finals, jsonBody, new Response.Listener<JSONObject>() {
+
+
+			@Override
+			public void onResponse(JSONObject response) {
+
+
+                try {
+
+                    Log.d("TAG", response.get("status").toString());
+
+					String message = response.get("status").toString();
+
+                   // Intent in = new Intent(getActivity(), MainActivity.class);
+                   // startActivity(in);
+
+                    if(message.contains("success")){
+					SharedPreferences pref = getActivity().getSharedPreferences("loginData", MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putString("firstName", "Rocky");
+					editor.putString("password", getPassword);
+					editor.commit();
+
+					Intent in = new Intent(getActivity(), MainActivity.class);
+					startActivity(in);
+				}
+				else{
+					Toast.makeText(getActivity(), "Something went wrong. Cannot login.", Toast.LENGTH_LONG).show();
+				}
+
+                }catch (Exception E){
+                    E.printStackTrace();
+                }
+
+
+
+                progressDialog.cancel();
+
+			}
+
+            //dismiss or cancel the dialog
+            //progressDialog.cancel();
+
+
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.e("TAG", error.getMessage(), error);
+
+                //dismiss or cancel the dialog
+                progressDialog.cancel();
+			}
+
+
+		}){
+
+			@Override
+			public Map<String, String> getHeaders() throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("Content-Type", "application/json");
+				String creds = String.format("%s:%s","taxiUserBeta","taxiUserBetaPass123");
+				String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+				params.put("Authorization", auth);
+				return params;
+			}
+
+		};
+
+
+		mQueue.add(jsonObjectRequest);
 
 	}
 
